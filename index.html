@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>BLSMDRIVE</title>
+  <title>Dayflux - Transform Your Breathing</title>
+  <meta name="description" content="Transform your daily routine with Dayflux - the premium breathing and mindfulness app. Complete library of guided exercises, progress tracking, and wellness integration.">
   <style>
     :root {
-      --bg: #f8f9fa;
-      --card-bg: #fff;
-      --text: #222;
-      --btn-bg: #222;
-      --btn-hover: #444;
-      --btn-color: #fff;
-      --radius: 6px;
+      --bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --text: #fff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --accent: #4ECDC4;
+      --btn-bg: var(--accent);
+      --btn-hover: #3db5ac;
+      --btn-color: #1a1a1a;
+      --radius: 16px;
     }
     * {
       box-sizing: border-box;
@@ -20,7 +23,7 @@
     body {
       margin: 0;
       padding: env(safe-area-inset);
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
       background: var(--bg);
       color: var(--text);
       display: flex;
@@ -28,46 +31,135 @@
       justify-content: center;
       min-height: 100vh;
       text-align: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(78, 205, 196, 0.05) 0%, transparent 50%);
+      pointer-events: none;
     }
     .container {
       width: 90%;
-      max-width: 500px;
+      max-width: 600px;
       background: var(--card-bg);
-      padding: 2rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 3rem 2rem;
       border-radius: var(--radius);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
     }
     .logo {
-      font-size: 2rem;
-      font-weight: bold;
+      font-size: 3rem;
+      font-weight: 300;
       margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #6ee3d8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
     }
     .tagline {
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
       line-height: 1.4;
+      color: var(--text-secondary);
+      font-weight: 400;
     }
-    p {
-      margin-bottom: 1rem;
+    .description {
+      margin-bottom: 2rem;
       line-height: 1.6;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .feature {
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .feature-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
     }
     .buttons {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
+      gap: 1rem;
+      margin-top: 2.5rem;
     }
     .button {
-      display: block;
-      padding: 0.75rem;
+      display: inline-block;
+      padding: 1rem 2rem;
       background: var(--btn-bg);
       color: var(--btn-color);
       text-decoration: none;
-      border-radius: var(--radius);
-      transition: background 0.2s ease;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      overflow: hidden;
     }
     .button:hover {
       background: var(--btn-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
+    }
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .button.secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+    }
+    .coming-soon {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      cursor: default;
+      position: relative;
+    }
+    .coming-soon:hover {
+      transform: none;
+      box-shadow: none;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .coming-soon::after {
+      content: 'Coming Soon';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.9rem;
+      font-weight: 400;
     }
     @media (min-width: 600px) {
       .buttons {
@@ -79,16 +171,53 @@
         margin: 0 0.5rem;
       }
     }
+    @media (max-width: 480px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
+      .logo {
+        font-size: 2.5rem;
+      }
+      .tagline {
+        font-size: 1.1rem;
+      }
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">blsmdrive</div>
-    <p class="tagline">Ongoing attempt to build simple, thoughtful tools that might be useful to others.</p>
-    <p>Our first project is <strong>Dayflux</strong> — a minimal breathwork app to support recovery, alertness, and sleep.</p>
+    <div class="logo">Dayflux</div>
+    <p class="tagline">Transform your breathing, transform your life</p>
+    <p class="description">
+      The premium breathing and mindfulness app designed to support your daily wellness journey. 
+      From stress relief to better sleep, Dayflux adapts to your needs with scientifically-backed breathing techniques.
+    </p>
+    
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🧘‍♀️</div>
+        <div class="feature-title">Guided Exercises</div>
+        <div class="feature-desc">Complete library of breathing techniques for every situation</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Progress Tracking</div>
+        <div class="feature-desc">Advanced analytics and insights to track your wellness journey</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">❤️</div>
+        <div class="feature-title">Health Integration</div>
+        <div class="feature-desc">Seamless HealthKit integration for complete wellness tracking</div>
+      </div>
+    </div>
+    
     <div class="buttons">
-      <a class="button" href="https://testflight.apple.com/join/u8vpRr5T" target="_blank">Join the Beta</a>
-      <a class="button" href="mailto:dev.blsmdrive@gmail.com">Contact Us</a>
+      <a class="button coming-soon" href="#">Download on App Store</a>
+      <a class="button secondary" href="https://testflight.apple.com/join/u8vpRr5T" target="_blank">Join Beta</a>
+      <a class="button secondary" href="mailto:dev.blsmdrive@gmail.com">Support</a>
     </div>
   </div>
 </body>
